@@ -1,0 +1,20 @@
+{
+  "name": "synchronizeSwagger",
+  "version": "1.0.0",
+  "description": "synchronizeSwagger",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js",
+    "ss": "node ./synchronizeSwagger.js"
+  },
+  "keywords": [
+    "synchronizeSwagger"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mkdirp": "^0.5.1",
+    "mockjs": "^1.0.1-beta3",
+    "swagger-parser-mock": "^1.1.1"
+  }
+}
