@@ -1,8 +1,8 @@
-const swaggerParserMock = require("swagger-parser-mock");
-const mkdirp = require("mkdirp");
-const pathModule = require("path");
-const fs = require("fs");
-const { swaggerOptions } = require("./conf");
+const swaggerParserMock = require('swagger-parser-mock');
+const mkdirp = require('mkdirp');
+const pathModule = require('path');
+const fs = require('fs');
+const { swaggerOptions } = require('./conf');
 
 const synchronizeSwagger = {
   init({ url, blacklist, outputPath }) {
@@ -40,7 +40,7 @@ const synchronizeSwagger = {
 
   writeFileSync(path, template) {
     try {
-      fs.writeFileSync(path, template, { flag: "wx" });
+      fs.writeFileSync(path, template, { flag: 'wx' });
       console.log(`增加Mock文件：${path}`);
     } catch (err) {
       console.error(err);
@@ -53,12 +53,12 @@ const synchronizeSwagger = {
 
       Object.keys(pathInfos).forEach(method => {
         const pathInfo = pathInfos[method];
-        if (this.blacklist.includes(path) || !pathInfo["responses"]["200"]) {
+        if (this.blacklist.includes(path) || !pathInfo['responses']['200']) {
           return false;
         }
         const outputPath = pathModule.join(__dirname, this.outputPath, path);
-        const summary = pathInfo["summary"];
-        const example = pathInfo["responses"]["200"]["example"];
+        const summary = pathInfo['summary'];
+        const example = pathInfo['responses']['200']['example'];
 
         // 创建目录
         this.mkdirSync(outputPath);
@@ -67,13 +67,13 @@ const synchronizeSwagger = {
           summary,
           example,
           method,
-          path
+          path,
         });
         // 创建文件
         this.writeFileSync(`${outputPath}/${method}.js`, template);
       });
     });
-  }
+  },
 };
 
 synchronizeSwagger.init(swaggerOptions);

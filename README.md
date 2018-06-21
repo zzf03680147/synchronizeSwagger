@@ -25,10 +25,11 @@ yapi,easymock等接口管理平台都提供了swagger,postman数据导入功能�
 
 ### Talk is cheap
 
-#### 解析
+##### ①解析
+
 从上图可以发现解析json文件，主要的工作在响应值类型的转换，这个我们交给第三方。
 ```javascript
-  const swaggerParserMock = require("swagger-parser-mock");
+  const swaggerParserMock = require('swagger-parser-mock');
 
   const synchronizeSwagger = {
     init({ url, blacklist, outputPath }) {
@@ -60,9 +61,12 @@ yapi,easymock等接口管理平台都提供了swagger,postman数据导入功能�
   }
 ```
 
-#### 生成文件
+##### ②生成文件
+
 ```javascript
-  const swaggerParserMock = require("swagger-parser-mock");
+  const mkdirp = require('mkdirp');
+  const pathModule = require('path');
+  const fs = require('fs');
 
   const synchronizeSwagger = {
     // 创建目录
@@ -87,6 +91,7 @@ yapi,easymock等接口管理平台都提供了swagger,postman数据导入功能�
         });
       };`;
     },
+
     // 创建文件
     writeFileSync(path, template) {
       try {
@@ -123,7 +128,8 @@ yapi,easymock等接口管理平台都提供了swagger,postman数据导入功能�
     }
 }
 ```
-#### 启动服务
+
+##### ③启动服务
 以express为例，利用require动态特征来创建路由
 ```javascript
 
@@ -136,7 +142,6 @@ const port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log(`server is listening ${port}`);
 });
-
 
 function scan(path, app) {
   const files = fs.readdirSync(path);
