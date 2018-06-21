@@ -1,0 +1,17 @@
+{
+  "port": 8091,
+  "swaggerOptions": {
+    "url": "https://petstore.swagger.io/v2/swagger.json",
+    "outputPath": "./routes",
+    "blacklist": []
+  },
+
+  "delayRes": {
+    "trunon": 0,
+    "time": 1000
+  },
+  "successRate": {
+    "trunon": 0,
+    "rate": 0.5
+  }
+}

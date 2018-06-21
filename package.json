@@ -4,7 +4,7 @@
   "description": "synchronizeSwagger",
   "main": "index.js",
   "scripts": {
-    "start": "node ./index.js",
+    "start": "nodemon ./index.js",
     "ss": "node ./synchronizeSwagger.js"
   },
   "keywords": [
@@ -16,5 +16,8 @@
     "mkdirp": "^0.5.1",
     "mockjs": "^1.0.1-beta3",
     "swagger-parser-mock": "^1.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
   }
 }

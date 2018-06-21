@@ -2,18 +2,19 @@ const swaggerParserMock = require("swagger-parser-mock");
 const mkdirp = require("mkdirp");
 const path = require("path");
 const fs = require("fs");
+const { swaggerOptions } = require('./conf');
 
 const synchronizeSwagger = {
-  init({ url, blacklist, output }) {
+  init({ url, blacklist, outputPath }) {
     this.url = url;
     this.blacklist = blacklist;
-    this.output = output;
+    this.outputPath = outputPath;
     this.parse();
   },
 
   async parse() {
-    const spec = await swaggerParserMock(this.url);
-    this.generate(spec);
+      const spec = await swaggerParserMock(this.url);
+      this.generate(spec);
   },
 
   generate(spec) {
@@ -29,7 +30,7 @@ const synchronizeSwagger = {
           continue;
         }
 
-        let _path = path.join(__dirname, this.output, p);
+        let _path = path.join(__dirname, this.outputPath, p);
 
         mkdirp.sync(_path, function(err) {
           if (err) {
@@ -55,10 +56,5 @@ const synchronizeSwagger = {
   }
 };
 
-const options = {
-  url: "https://tap-dev.dianrong.com/api/v2/api-docs",
-  output: "./routes",
-  blacklist: ["/healthCheck", "/error", "/v", "/v2", "/v3", "/v4"]
-};
 
-synchronizeSwagger.init(options);
+synchronizeSwagger.init(swaggerOptions);
