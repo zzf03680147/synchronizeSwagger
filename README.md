@@ -65,7 +65,7 @@ yapi,easymock等接口管理平台都提供了swagger,postman数据导入功能�
 
 ```javascript
   const mkdirp = require('mkdirp');
-  const pathModule = require('path');
+  const join = require('path').join;
   const fs = require('fs');
 
   const synchronizeSwagger = {
@@ -111,7 +111,7 @@ yapi,easymock等接口管理平台都提供了swagger,postman数据导入功能�
           if (this.blacklist.includes(path) || !pathInfo["responses"]["200"]) {
             return false;
           }
-          const outputPath = pathModule.join(__dirname, this.outputPath, path);
+          const outputPath = join(__dirname, this.outputPath, path);
           const summary = pathInfo["summary"];
           const example = pathInfo["responses"]["200"]["example"];
 
