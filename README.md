@@ -21,7 +21,7 @@ mock作为前端开发重要的一环，可以带来诸多好处：
 
 
 yapi,easymock等接口管理平台都提供了swagger,postman数据导入功能，以swagger为例，打开network,可以看见api-docs文件
-
+![api-doc](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api-docs.png)
 可以想见，如果能适时同步后端部署的接口，可以省去不少体力活。本文就是以此文件为基础，试着构建本地的mock数据
 
 ### 目标
