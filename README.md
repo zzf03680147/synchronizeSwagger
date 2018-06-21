@@ -14,6 +14,7 @@ yapi,easymock等接口管理平台都提供了swagger,postman数据导入功能�
 
 ![api-doc](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api-docs.png)
 
+
 可以想见，如果能适时同步后端部署的接口，可以省去前端不少体力活。本文就是以此文件为基础，试着构建本地的mock。
 
 ### 目标
@@ -23,6 +24,29 @@ yapi,easymock等接口管理平台都提供了swagger,postman数据导入功能�
 
 
 ### Talk is cheap
+
+#### 解析
+从上图可以发现解析json文件，主要的工作在响应值类型的转换，这个我们交给第三方。
+```javascript
+  const swaggerParserMock = require("swagger-parser-mock");
+
+  const synchronizeSwagger = {
+    init({ url, blacklist, outputPath }) {
+      this.url = url;
+      this.blacklist = blacklist;
+      this.outputPath = outputPath;
+      this.parse();
+    },
+
+    async parse() {
+      const { paths } = await swaggerParserMock(this.url);
+      this.generate(paths);
+    }
+
+  }
+```
+
+然后就能得到类似的paths值，example就是插件为我们做的类型转化和mock包装
 ```javascript
   "/path/foo": {
     "get": {
@@ -36,6 +60,102 @@ yapi,easymock等接口管理平台都提供了swagger,postman数据导入功能�
   }
 ```
 
+#### 生成文件
+```javascript
+  const swaggerParserMock = require("swagger-parser-mock");
+
+  const synchronizeSwagger = {
+    // 创建目录
+    mkdirSync(outputPath) {
+      mkdirp.sync(outputPath, function(err) {
+        if (err) {
+          console.error(err);
+        }
+      });
+    },
+
+    // 生成文件模板
+    generateTemplate({ summary, example, method, path }) {
+      // prettier-ignore
+      return `/**
+        ${summary}
+      **/
+      const Mock = require("mockjs");
+      module.exports = function (app) {
+        app.${method}('/api${path.replace(/\{([^}]*)\}/g, ":$1")}', (req, res) => {
+          res.json(Mock.mock(${example}));
+        });
+      };`;
+    },
+    // 创建文件
+    writeFileSync(path, template) {
+      try {
+        fs.writeFileSync(path, template, { flag: "wx" });
+        console.log(`增加Mock文件：${path}`);
+      } catch (err) {
+        console.error(err);
+      }
+    },
+
+    generate(paths) {
+      Object.keys(paths).forEach(path => {
+        const pathInfos = paths[path];
+
+        Object.keys(pathInfos).forEach(method => {
+          const pathInfo = pathInfos[method];
+          if (this.blacklist.includes(path) || !pathInfo["responses"]["200"]) {
+            return false;
+          }
+          const outputPath = pathModule.join(__dirname, this.outputPath, path);
+          const summary = pathInfo["summary"];
+          const example = pathInfo["responses"]["200"]["example"];
+
+          this.mkdirSync(outputPath);
+          const template = this.generateTemplate({
+            summary,
+            example,
+            method,
+            path
+          });
+          this.writeFileSync(`${outputPath}/${method}.js`, template);
+        });
+      });
+    }
+}
+```
+#### 启动服务
+以express为例，利用require动态特征来创建路由
+```javascript
+
+const express = require('express');
+const fs = require('fs');
+const join = require('path').join;
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.listen(port, function() {
+  console.log(`server is listening ${port}`);
+});
+
+
+function scan(path, app) {
+  const files = fs.readdirSync(path);
+  for (let i = 0; i < files.length; i++) {
+    let fpath = join(path, files[i]);
+    let stats = fs.statSync(fpath);
+    if (stats.isDirectory()) {
+      scan(fpath, app);
+    }
+    if (stats.isFile()) {
+      require(fpath)(app);
+    }
+  }
+}
+
+scan(join(__dirname, './routes'), app);
+
+```
+
 ### 写在最后
 这样我们就利用swagger-ui生成了本地mock数据，再加上跨域、body-parser等middleware, 一个mini mock就基本可用了。为了方便同步，我们还可以将它加入npm scripts:
 
@@ -44,3 +164,5 @@ yapi,easymock等接口管理平台都提供了swagger,postman数据导入功能�
     "ss": "node ./synchronizeSwagger.js"
   },
 ```
+
+[示例代码](https://github.com/zzf03680147/synchronizeSwagger)
