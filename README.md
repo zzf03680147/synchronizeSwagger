@@ -10,16 +10,16 @@ mock作为前端开发重要的一环，可以带来诸多好处：
 - ...
 
 ### 缘起
-yapi,easymock等接口管理平台都提供了swagger,postman数据导入功能，原理大同小异，无非就是解析json文件，然后生成相应的api。以swagger为例，打开network可以看见有个api-docs文件:
+yapi，easymock等接口管理平台都提供了swagger，postman数据导入功能，原理大同小异，无非就是解析json文件来生成相应的api。以swagger为例，打开network会发现有个api-docs文件:
 
 ![api-doc](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api-docs.png)
 
 
-可以想见，如果能适时同步后端部署的接口，可以省去前端不少体力活。本文就是以此文件为基础，试着构建本地的mock。
+可以想见，如果能适时同步后端部署的接口，将省去前端不少体力活。我们就以此文件为基础，来试着构建本地的mock。
 
 ### 目标
-- **api path和本地的mock文件目录相对应，便于查找、修改**
-- **以api method为文件名,一个api对应一个文件，减少冲突**
+- **api路径和本地的mock文件目录相对应，便于查找、修改**
+- **以请求方法为文件名,一个方法对应一个文件，减少编辑冲突**
 - **使用mockjs包装响应值，易于模拟一些极端状况** 
 
 
@@ -47,7 +47,7 @@ yapi,easymock等接口管理平台都提供了swagger,postman数据导入功能�
   }
 ```
 
-然后就能得到类似的paths值，example就是插件为我们做的类型转化和mock包装
+这样我们就能得到如下的api路径信息，其中example就是插件为我们做的类型转化和mock包装
 ```javascript
   "/path/foo": {
     "get": {
@@ -130,7 +130,7 @@ yapi,easymock等接口管理平台都提供了swagger,postman数据导入功能�
 ```
 
 ##### ③启动服务
-以express为例，利用require动态特征来创建路由
+以express为例，利用require动态特征我们来创建路由。
 ```javascript
 
 const express = require('express');
@@ -162,7 +162,7 @@ scan(join(__dirname, './routes'), app);
 ```
 
 ### 写在最后
-这样我们就利用swagger-ui生成了本地mock数据，再加上跨域、body-parser等middleware, 一个mini mock就基本可用了。为了方便同步，我们还可以将它加入npm scripts:
+到此，我们就利用swagger-ui生成了本地mock数据，再加上跨域、body-parser等middleware, 一个mini mock就基本可用了。为了方便同步，我们还可以将它加入npm scripts:
 
 ```javascript
   "scripts": {
