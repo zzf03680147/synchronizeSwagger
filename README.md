@@ -24,12 +24,16 @@ yapi,easymock等接口管理平台都提供了swagger,postman数据导入功能�
 
 ### Talk is cheap
 ```javascript
-    init({ url, blacklist, output }) {
-        this.url = url;
-        this.blacklist = blacklist;
-        this.output = output;
-        this.parse();
+  "/path/foo": {
+    "get": {
+      "summary": "bar",
+      "responses": {
+        "200": {
+          "example": "'@string'"
+        }
+      }
     }
+  }
 ```
 
 ### 写在最后

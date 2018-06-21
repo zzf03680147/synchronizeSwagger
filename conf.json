@@ -1,7 +1,8 @@
 {
   "port": 8091,
   "swaggerOptions": {
-    "url": "https://petstore.swagger.io/v2/swagger.json",
+    "url":
+      "https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/swagger.json",
     "outputPath": "./routes",
     "blacklist": []
   },
