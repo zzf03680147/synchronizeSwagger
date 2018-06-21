@@ -165,4 +165,4 @@ scan(join(__dirname, './routes'), app);
   },
 ```
 
-[示例代码](https://github.com/zzf03680147/synchronizeSwagger)
+附件：[示例代码](https://github.com/zzf03680147/synchronizeSwagger)
