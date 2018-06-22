@@ -9,7 +9,7 @@ mock作为前端开发重要的一环，可以带来诸多好处：
 - **及早发现一些极端情况下的布局问题**
 - ...
 
-yapi，easymock等接口管理平台都提供了Swagger，Postman数据导入功能，原理大同小异，无非就是解析json文件来生成相应的api。以Swagger为例，打开network会发现有个api-docs文件:
+yapi、easymock等接口管理平台都提供了Swagger、Postman数据导入功能，原理大同小异，无非就是解析json文件来生成相应的api。以Swagger为例，打开network会发现有个api-docs文件:
 
 ![api-doc](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api-docs.png)
 
@@ -55,14 +55,14 @@ yapi，easymock等接口管理平台都提供了Swagger，Postman数据导入功
 
 ```
 
-打印paths信息，格式如下，其中example就是解析模块为我们做的类型转化和mock包装。
+打印paths信息，格式大致如下：
 ```javascript
   "/path/foo": {
     "get": {
       "summary": "bar",
       "responses": {
         "200": {
-          "example": "'@string'"
+          "example": "'@string'" // 模块为我们做的类型转化和mock包装。
         }
       }
     }
@@ -171,14 +171,14 @@ scan(join(__dirname, './routes'), app);
 ```
 
 ### 写在最后
-至此我们就利用Swagger UI生成了本地mock数据，如果再加上跨域、body-parser等middleware, 一个mini mock就基本成形。为了方便同步，我们还可以将它加入npm scripts:
+至此我们就利用Swagger UI生成了本地mock数据，如果再加上跨域、body-parser等middleware, 一个mini mock就基本成形。为了方便同步，我们还可以将它加入npm scripts：
 
 ```javascript
   "scripts": {
     "ss": "node ./synchronizeSwagger.js"
   },
 ```
-执行npm run ss,就能生成相应的mock数据了：
+执行npm run ss，就能生成相应的mock数据了：
 
 ![route](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/route.png)
 
