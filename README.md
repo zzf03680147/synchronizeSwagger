@@ -1,5 +1,8 @@
 利用Swagger UI生成本地mock数据
 ===
+
+附件：[示例代码](https://github.com/zzf03680147/synchronizeSwagger)
+
 ### 背景
 
 mock作为前端开发重要的一环，可以带来诸多好处：
@@ -185,4 +188,3 @@ scan(join(__dirname, './routes'), app);
 ![api](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api.png)
 
 
-附件：[示例代码](https://github.com/zzf03680147/synchronizeSwagger)
