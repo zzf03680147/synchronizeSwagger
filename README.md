@@ -1,6 +1,6 @@
-利用swagger-ui生成本地mock数据
+利用Swagger UI生成本地mock数据
 ===
-### 为什么前端需要mock
+### 背景
 
 mock作为前端开发重要的一环，可以带来诸多好处：
 
@@ -9,8 +9,7 @@ mock作为前端开发重要的一环，可以带来诸多好处：
 - **及早发现一些极端情况下的布局问题**
 - ...
 
-### 缘起
-yapi，easymock等接口管理平台都提供了swagger，postman数据导入功能，原理大同小异，无非就是解析json文件来生成相应的api。以swagger为例，打开network会发现有个api-docs文件:
+yapi，easymock等接口管理平台都提供了Swagger，Postman数据导入功能，原理大同小异，无非就是解析json文件来生成相应的api。以Swagger为例，打开network会发现有个api-docs文件:
 
 ![api-doc](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api-docs.png)
 
@@ -25,9 +24,9 @@ yapi，easymock等接口管理平台都提供了swagger，postman数据导入功
 
 ### Talk is cheap
 
-##### ①解析
+#### ①解析
 
-从上图可以发现解析json文件，主要的工作在响应值类型的转换，这个我们交给第三方。
+从上图可以发现解析json文件，主要的工作在响应值类型的转换，这边我们利用easymock的一个解析模块来做这件事情。
 ```javascript
   const swaggerParserMock = require('swagger-parser-mock');
 
@@ -38,16 +37,25 @@ yapi，easymock等接口管理平台都提供了swagger，postman数据导入功
       this.outputPath = outputPath;
       this.parse();
     },
-
     async parse() {
       const { paths } = await swaggerParserMock(this.url);
       this.generate(paths);
+      console.dir(paths);
     }
-
   }
+  
+  synchronizeSwagger.init({
+    // Swagger api-docs地址
+    "url":"https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/swagger.json",
+    // 生成文件的目录
+    "outputPath": "./routes",
+    // 黑名单，跳过一些不需要同步的api
+    "blacklist": []
+  });
+
 ```
 
-这样我们就能得到如下的api路径信息，其中example就是插件为我们做的类型转化和mock包装
+打印paths信息，格式如下，其中example就是解析模块为我们做的类型转化和mock包装。
 ```javascript
   "/path/foo": {
     "get": {
@@ -61,7 +69,7 @@ yapi，easymock等接口管理平台都提供了swagger，postman数据导入功
   }
 ```
 
-##### ②生成文件
+#### ②生成文件
 
 ```javascript
   const mkdirp = require('mkdirp');
@@ -102,6 +110,7 @@ yapi，easymock等接口管理平台都提供了swagger，postman数据导入功
       }
     },
 
+    // 遍历api信息
     generate(paths) {
       Object.keys(paths).forEach(path => {
         const pathInfos = paths[path];
@@ -129,7 +138,7 @@ yapi，easymock等接口管理平台都提供了swagger，postman数据导入功
 }
 ```
 
-##### ③启动服务
+#### ③启动服务
 以express为例，利用require动态特征我们来创建路由。
 ```javascript
 
@@ -162,12 +171,15 @@ scan(join(__dirname, './routes'), app);
 ```
 
 ### 写在最后
-到此，我们就利用swagger-ui生成了本地mock数据，再加上跨域、body-parser等middleware, 一个mini mock就基本可用了。为了方便同步，我们还可以将它加入npm scripts:
+至此我们就利用Swagger UI生成了本地mock数据，如果再加上跨域、body-parser等middleware, 一个mini mock就基本成形。为了方便同步，我们还可以将它加入npm scripts:
 
 ```javascript
   "scripts": {
     "ss": "node ./synchronizeSwagger.js"
   },
 ```
+执行npm run ss,就会在生成相应的mock数据了：
+![routes](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/routes.png)
+
 
 附件：[示例代码](https://github.com/zzf03680147/synchronizeSwagger)
