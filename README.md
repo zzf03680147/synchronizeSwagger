@@ -179,6 +179,7 @@ scan(join(__dirname, './routes'), app);
   },
 ```
 执行npm run ss,就能生成相应的mock数据了：
+
 ![routes](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/routes.png)
 
 
