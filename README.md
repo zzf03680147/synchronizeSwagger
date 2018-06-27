@@ -14,7 +14,7 @@ mock作为前端开发重要的一环，可以带来诸多好处：
 
 yapi、easymock等接口管理平台都提供了Swagger、Postman数据导入功能，原理大同小异，无非就是解析json文件来生成相应的api。以Swagger为例，打开network会发现有个api-docs文件:
 
-![api-doc](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api-docs.png)
+![api-doc](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api-docs.png){:width="100%"}
 
 
 可以想见，如果能适时同步后端部署的接口，将省去前端不少体力活。我们就以此文件为基础，来试着构建本地的mock数据。
@@ -203,8 +203,8 @@ scan(join(__dirname, './routes'), app);
 ```
 执行npm run ss，就能生成相应的mock数据和访问api了：
 
-![route](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/route.png)
+![route](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/route.png){:width="100%"}
 
-![api](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api.png)
+![api](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api.png){:width="100%"}
 
 
