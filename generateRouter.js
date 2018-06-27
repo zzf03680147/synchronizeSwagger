@@ -7,9 +7,11 @@ const join = require('path').join;
 
 function scan(path, app) {
   const files = fs.readdirSync(path);
+
   for (let i = 0; i < files.length; i++) {
-    let fpath = join(path, files[i]);
-    let stats = fs.statSync(fpath);
+    const fpath = join(path, files[i]);
+    const stats = fs.statSync(fpath);
+
     if (stats.isDirectory()) {
       scan(fpath, app);
     }
