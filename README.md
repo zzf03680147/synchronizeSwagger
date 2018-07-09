@@ -12,7 +12,9 @@ Mock顾名思义是一种模拟。在项目测试中，通常利用相同的接�
 ### 背景
 前端开发大致可分为三个阶段：并行开发阶段->联调阶段->测试阶段。对于前后端分离项目，要面对数据源的问题。
 
+<div align="center">
 ![process](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/process.png)
+</div>
 
 处于联调阶段，我们可以通过不同环境来获取数据源。如果有跨域限制的话，可以通过Charles、Fiddler调试代理等工具来解决，也可以起一个本地服务：
 ```javascript
@@ -39,7 +41,10 @@ Mock顾名思义是一种模拟。在项目测试中，通常利用相同的接�
 
 通过拦截和平台的方式，其缺点比较难于克服。本文试着以笔者接触较多Swagger为例来改造本地Mock Server，以降低不断创建和修改接口带来的成本和乏味。
 打开network会发现有个api-docs文件:
+
+<div align="center">
 ![api-doc](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api-docs.png)
+</div>
 
 YApi、Easy Mock等接口管理平台都提供了Swagger、Postman数据导入功能，原理大同小异，无非就是解析json文件来生成相应的api。可以想见，如果能适时同步后端部署的接口，将省去前端不少体力活。我们就以此文件为基础，来试着构建本地的mock数据。
 
@@ -232,9 +237,12 @@ scan(join(__dirname, './routes'), app);
 ```
 执行npm run ss，就能生成相应的mock数据和访问api了：
 
+<div align="center">
 ![route](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/route.png)
+</div>
 
+<div align="center">
 ![api](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api.png)
-
+</div>
 
 附件：[示例代码](https://github.com/zzf03680147/synchronizeSwagger)
