@@ -10,13 +10,13 @@ Mock顾名思义是一种模拟。在项目测试中，通常利用相同的接�
 - ...
 
 ### 背景
-前端开发大致可分为三个阶段：并行开发阶段->联调阶段->测试阶段。对于前后端分离项目，要面对数据源的问题。
+前端开发大致可分为三个阶段：并行开发阶段->联调阶段->测试阶段。如果是前后端分离项目，那么就要面对数据源的问题。
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/process.png">
 </p>
 
-处于联调阶段，我们可以通过不同环境来获取数据源。如果有跨域限制的话，可以通过Charles、Fiddler调试代理等工具来解决，也可以起一个本地服务：
+处于联调阶段，我们可以通过不同环境来获取数据源。如果有跨域限制的话，可利用Charles、Fiddler调试代理等工具来解决，也可以起一个本地服务：
 ```javascript
   const express = require('express');
   const proxy = require('http-proxy-middleware');
@@ -29,13 +29,13 @@ Mock顾名思义是一种模拟。在项目测试中，通常利用相同的接�
 
 如果处于并行开发阶段，那我们就需要Mock数据，一般有如下几种常用方式：
 
-1. 拦截ajax、fetch请求
+1. 拦截ajax、fetch请求</br>
 缺点：前端混入脏代码。
 
-2. 本地Mock Server
+2. 本地Mock Server</br>
 缺点：接口众多，创建和修改成本高。
 
-3. YApi、Easy Mock的接口管理平台
+3. YApi、Easy Mock的接口管理平台</br>
 缺点：灵活性不够。比如一些配置信息散落在各个接口，没法集中管理，修改成本高。
 
 
@@ -238,11 +238,11 @@ scan(join(__dirname, './routes'), app);
 执行npm run ss，就能生成相应的mock数据和访问api了：
 
 <p align="center">
-![route](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/route.png)
+  <img src="https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/route.png">
 </p>
 
 <p align="center">
-![api](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api.png)
+  <img src="https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api.png">
 </p>
 
 附件：[示例代码](https://github.com/zzf03680147/synchronizeSwagger)
