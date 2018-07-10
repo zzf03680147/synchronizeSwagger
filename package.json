@@ -18,6 +18,7 @@
     "swagger-parser-mock": "^1.1.1"
   },
   "devDependencies": {
+    "http-proxy-middleware": "^0.18.0",
     "nodemon": "^1.17.5"
   }
 }
