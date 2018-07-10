@@ -11,9 +11,7 @@ Mock顾名思义是一种模拟。通常利用相同的接口来模拟出一个�
 ### 背景
 前端开发可简单分为三个阶段：并行开发阶段、联调阶段和测试阶段。现在的前端项目大多为前后端分离，在开发、联调阶段不可避免要面对数据源的问题。
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/process.png">
-</p>
+![前端开发阶段](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/process.png)
 
 在联调阶段，各个环境已有真实数据，方便本地调试，我们一般会将接口指向真实数据源。如果有跨域限制的话，可利用Charles、Fiddler等调试代理工具来解决，也可以起一个本地Server：
 
@@ -38,11 +36,9 @@ app.listen(3000);
 3、YApi、Easy Mock的接口管理平台</br>
 缺点：灵活性不够。比如一些配置信息分散在各个接口，没法集中管理，修改成本高。
 
-本文以笔者接触较多的Swagger为例，从一个侧面改善本地Mock Server需要不断创建接口的缺点。 打开后端提供的Swagger UI地址的Network，发现有个api-docs文件。
+本文以笔者接触较多的Swagger为例，从一个侧面改善本地Mock Server需要不断创建接口的缺点。打开后端提供的Swagger UI地址的Network，发现有个api-docs文件。
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api-docs.png">
-</p>
+![接口文档](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api-docs.png)
 
 这个JSON文件包含接口、请求方法、响应格式等信息。可以想见解析这个文件并不难，唯一比较麻烦的可能就是响应值的解析和类型转换。如果能适时同步数据到本地Mock Server，能省去不少乏味的体力活。
 
@@ -234,12 +230,9 @@ scan(join(__dirname, './routes'), app);
 
 执行npm run ss，就能生成相应的Mock数据和访问接口了。
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/route.png">
-</p>
+![route](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/route.png)
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api.png">
-</p>
+![api](https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/api.png)
+
 
 附件：[示例代码](https://github.com/zzf03680147/synchronizeSwagger)
