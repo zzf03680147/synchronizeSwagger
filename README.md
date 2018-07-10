@@ -29,7 +29,7 @@ app.listen(3000);
 
 如果还处在并行开发阶段，那我们就需要Mock数据，一般有以下几种常用方式：
 
-1、拦截ajax、fetch请求</br>
+1、拦截Ajax、Fetch请求</br>
 缺点：前端混入脏代码；无法有效模拟网络情况。
 
 2、本地Mock Server</br>
@@ -48,13 +48,13 @@ app.listen(3000);
 
 ### Talk is cheap
 
-### 目标
+#### 1、目标
 - **接口路径和Mock目录相对应，便于查找、修改**
 - **以请求方法为文件名，一个方法对应一个文件，减少多人编辑冲突**
 - **使用Mock.js包装响应值，易于模拟一些极端状况** 
 
 
-#### 1.解析JSON文件
+#### 2、解析JSON文件
 
 前面我们提到解析JSON文件的难点主要在响应值类型的转换，这边我们利用Easy Mock的一个解析模块来做这件事情。
 
@@ -107,7 +107,7 @@ synchronizeSwagger.init({
 }
 ```
 
-#### 2.遍历接口。我们可以加入黑名单，过滤掉一些对前端没有用处的接口。减少干扰，提高可维护性。
+#### 3、遍历接口。我们可以加入黑名单，过滤掉一些对前端没有用处的接口。减少干扰，提高可维护性。
 
 ```javascript
 const fs = require('fs');
@@ -139,7 +139,7 @@ const synchronizeSwagger = {
 }
 ```
 
-#### 3.生成Mock文件，可以添加注释等信息。
+#### 4、生成Mock文件，可以添加注释等信息。
 ```javascript
 const synchronizeSwagger = {
   // 生成mock文件
@@ -189,7 +189,7 @@ module.exports = function (app) {
 ```
 
 
-#### 4.启动Mock Server
+#### 5、启动Mock Server
 以express为例，利用require动态特征我们来创建路由，映射到刚才创建的接口文件。
 
 ```javascript
@@ -224,7 +224,7 @@ scan(join(__dirname, './routes'), app);
 ```
 
 ### 写在最后
-至此我们就利用Swagger UI同步Mock数据，如果再加上跨域、body-parser等Middleware，一个本地Mock Server基本成形。方便同步，我们将它加入npm scripts：
+至此我们就利用Swagger UI同步Mock数据，如果再加上cors、body-parser等Middleware，一个本地Mock Server基本成形。方便同步，我们将它加入npm scripts。
 
 ```javascript
   "scripts": {
@@ -232,7 +232,7 @@ scan(join(__dirname, './routes'), app);
   },
 ```
 
-执行npm run ss，就能生成相应的Mock数据和访问接口了：
+执行npm run ss，就能生成相应的Mock数据和访问接口了。
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/zzf03680147/synchronizeSwagger/master/static/img/route.png">
